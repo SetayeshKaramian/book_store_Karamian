@@ -1,0 +1,15 @@
+body {
+  background-image: url(night.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+}
+
+.btn {
+  background-color: black;
+}
+
+btn:hover {
+  background-color: #fff;
+  color: black;
+}
