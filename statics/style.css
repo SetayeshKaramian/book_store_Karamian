@@ -16,8 +16,22 @@ body {
   color: white;
 }
 
-.h1 {
+.container {
+  background-color: white !important;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 2000px;
 }
+
+.card {
+  color: black;
+}
+
+/* .ss {
+  display: flexbox;
+  justify-content: center;
+} */
 
 /* .btn {
   background-color: black;

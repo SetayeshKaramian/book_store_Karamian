@@ -6,14 +6,10 @@ from django.conf import settings
 
 
 class Order(models.Model):
-    STATE_CHOICES = [
-        ('P', 'payed'),
-        ('U', 'Unpaid')
-    ]
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     coupon = models.ForeignKey(Coupon, related_name="coupon", on_delete=models.SET_NULL, blank=True, null=True)
     ordered_date = models.DateTimeField()
-    state = models.CharField(max_length=1, choices=STATE_CHOICES, default='U')
+    paid = models.BooleanField(default=False)
     billing_address = models.CharField(max_length=13, blank=True, null=True)
 
     def __str__(self):
