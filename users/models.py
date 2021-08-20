@@ -18,6 +18,21 @@ class CustomUser(AbstractUser):
         return self.email
 
 
+class Customer(CustomUser):
+    class Meta:
+        proxy = True
+
+
+class Staff(CustomUser):
+    class Meta:
+        proxy = True
+
+
+class Admin(CustomUser):
+    class Meta:
+        proxy = True
+
+
 class Address(models.Model):
     address = models.CharField(max_length=250)
     zip_code = models.IntegerField()
