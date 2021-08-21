@@ -1,5 +1,6 @@
 from django.db import models
 from django.shortcuts import reverse
+from django_extensions.db.fields import AutoSlugField
 
 
 class Category(models.Model):
@@ -18,9 +19,13 @@ class Book(models.Model):
     time_add = models.DateTimeField(auto_now_add=True)
     price = models.PositiveIntegerField(default=0)
     image = models.ImageField(blank=True, null=True)
+    storage = models.PositiveIntegerField(default=1)
+    slug = AutoSlugField(populate_from=['title', 'author', 'publisher'])
 
     def __str__(self):
         return self.title
-    
+
     def get_absolute_url(self):
-        return reverse
+        return reverse("core:book_detail", kwargs={
+            'slug': self.slug
+        })
