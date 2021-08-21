@@ -17,7 +17,6 @@ body {
 }
 
 .container {
-  background-color: white !important;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -26,6 +25,10 @@ body {
 
 .card {
   color: black;
+}
+
+.discount{
+    color: red;
 }
 
 /* .ss {

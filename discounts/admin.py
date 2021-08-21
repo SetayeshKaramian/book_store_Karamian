@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Coupon, DiscountPercent, DiscountUpTo
+from .models import Coupon, Discount
 
 # Register models.
 admin.site.register(Coupon)
-admin.site.register(DiscountPercent)
-admin.site.register(DiscountUpTo)
+admin.site.register(Discount)

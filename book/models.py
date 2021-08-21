@@ -1,6 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
 from django_extensions.db.fields import AutoSlugField
+from discounts.models import Discount
 
 
 class Category(models.Model):
@@ -18,14 +19,28 @@ class Book(models.Model):
     description = models.TextField()
     time_add = models.DateTimeField(auto_now_add=True)
     price = models.PositiveIntegerField(default=0)
+    discount = models.ForeignKey(Discount, related_name="discount", on_delete=models.SET_NULL, blank=True, null=True)
     image = models.ImageField(blank=True, null=True)
     storage = models.PositiveIntegerField(default=1)
-    slug = AutoSlugField(populate_from=['title', 'author', 'publisher'])
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse("core:book_detail", kwargs={
-            'slug': self.slug
-        })
+    # def get_absolute_url(self):
+    #     return reverse("core:book", kwargs={
+    #         'slug': self.slug
+    #     })
+
+    def get_final_price(self):
+        if self.discount is None:
+            final_price = self.price
+        else:
+            if self.discount.flat_amount is None:
+                final_price = self.price * (1 - self.discount.percentage)
+            else:
+                if self.discount.flat_amount * self.discount.percentage >= self.price:
+                    final_price = self.price - self.discount.flat_amount
+                else:
+                    final_price = self.price * (1 - self.discount.percentage)
+        return int(final_price)
