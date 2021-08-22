@@ -20,17 +20,15 @@ class Book(models.Model):
     time_add = models.DateTimeField(auto_now_add=True)
     price = models.PositiveIntegerField(default=0)
     discount = models.ForeignKey(Discount, related_name="discount", on_delete=models.SET_NULL, blank=True, null=True)
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(upload_to='covers/', blank=True, null=True)
     storage = models.PositiveIntegerField(default=1)
     slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-    #     return reverse("core:book", kwargs={
-    #         'slug': self.slug
-    #     })
+    def get_absolute_url(self):
+        return reverse('book_detail', args=[str(self.id)])
 
     def get_final_price(self):
         if self.discount is None:
