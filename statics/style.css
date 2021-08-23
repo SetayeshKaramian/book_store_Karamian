@@ -18,19 +18,26 @@ body {
 
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
-  max-width: 2000px;
+  text_align: center;
 }
 
 .card {
   color: black;
+  margin: 1em;
 }
 
-.discount{
-    color: red;
+.discount {
+  color: red;
 }
 
+.book_detail{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+    text-align: right;
+}
 /* .ss {
   display: flexbox;
   justify-content: center;

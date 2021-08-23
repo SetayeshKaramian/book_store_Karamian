@@ -2,85 +2,67 @@
 {% load static %}
 
 {% block body %}
-<!--  <main class="mt-5 pt-4">-->
-<!--  <div class='container'>-->
-<!--    <div class="row">-->
-<!--      <div class="col-4" style="background-color: aqua">hi</div>-->
-<!--      <div class="col-8 detail_image">-->
-<!--        <img src="{% static 'book1.jpg' %}" alt="Italian Trulli"></div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  </main>-->
-<!--Main layout-->
-  <main class="mt-5 pt-4">
-    <div class="container mt-5">
 
-      <!--Grid row-->
-      <div class="row wow fadeIn card">
+<main class="mt-5 pt-4">
+    <div class="container mt-5 book_detail">
 
-        <!--Grid column-->
-        <div class="col-md-6 mb-4">
+        <!--Grid row-->
+        <div class="row wow fadeIn">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">
+            <!--Grid column-->
+            <div class="col-md-6 mb-4 card">
+                <!--Content-->
+                <div class="p-4">
+                    <h4><strong>{{object.title}}</strong></h4>
+                    <p>{{object.description}}</p>
+                    <p>
+                        {% if object.discount %}
+                  <span><s class="discount">{{object.price}}</s></span>
+                  {{object.get_final_price}} ریال
+                  {% else %}
+                  <span>{{object.price}} ریال</span>
+                  {% endif %}
+                    </p>
 
-        </div>
-        <!--Grid column-->
 
-        <!--Grid column-->
-        <div class="col-md-6 mb-4">
 
-          <!--Content-->
-          <div class="p-4">
-            <p class="lead">
-              <span class="mr-1">
-                <del>$200</del>
-              </span>
-              <span>$100</span>
-            </p>
 
-            <p class="lead font-weight-bold">{{object.title}}</p>
 
-            <p>{{object.description}}</p>
+                    <!--            <form class="d-flex justify-content-left">-->
+                    <!--              &lt;!&ndash; Default input &ndash;&gt;-->
+                    <!--              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">-->
+                    <!--              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart-->
+                    <!--                <i class="fas fa-shopping-cart ml-1"></i>-->
+                    <!--              </button>-->
 
-            <form class="d-flex justify-content-left">
-              <!-- Default input -->
-              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
-              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
-                <i class="fas fa-shopping-cart ml-1"></i>
-              </button>
+                    <!--            </form>-->
+                    <a href="{% url 'add_to_cart' object.id %}" class="btn btn-primary btn-md my-0 p">Add to cart
+                        <i class="fas fa-shopping-cart ml-1"></i>
+                    </a>
+                    <a href="{% url 'remove_from_cart' object.id %}" class="btn btn-primary btn-md my-0 p">
+                        remove from cart
+                        <i class="fas fa-shopping-cart ml-1"></i>
+                    </a>
 
-            </form>
+                </div>
+                <!--Content-->
 
-          </div>
-          <!--Content-->
+            </div>
+            <!--Grid column-->
 
-        </div>
-        <!--Grid column-->
-
-      </div>
-      <!--Grid row-->
-
-      <hr>
-
-      <!--Grid row-->
-      <div class="row d-flex justify-content-center wow fadeIn">
-
-        <!--Grid column-->
-        <div class="col-md-6 text-center">
-
-          <h4 class="my-4 h4">Additional information</h4>
-
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
-            voluptates,
-            quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+             <!--Grid column-->
+            {% if object.image %}
+            <div class="col-md-4 mb-4">
+                <img src="{{ object.image.url}}" class="img-fluid"
+                     alt="">
+            </div>
+            {% endif %}
+            <!--Grid column-->
 
         </div>
-        <!--Grid column-->
-
-      </div>
 
     </div>
-  </main>
-  <!--Main layout-->
+</main>
+<!--Main layout-->
 
 {% endblock body %}

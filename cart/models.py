@@ -3,17 +3,24 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 from discounts.models import Coupon
+from django.shortcuts import reverse
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     coupon = models.ForeignKey(Coupon, related_name="coupon", on_delete=models.SET_NULL, blank=True, null=True)
-    ordered_date = models.DateTimeField()
+    ordered_date = models.DateTimeField(auto_now_add=True)
     paid = models.BooleanField(default=False)
     billing_address = models.CharField(max_length=13, blank=True, null=True)
 
     def __str__(self):
         return f"{self.user} سفارشات"
+
+    def get_absolute_url(self):
+        return reverse('cart', args=[str(self.id)])
 
     def total_price(self):
         total = 0
@@ -35,7 +42,7 @@ class Order(models.Model):
         if self.coupon is not None:
             if self.check_coupon_validation is True:
                 if self.coupon.flat_amount in None:
-                    final_price = self.total_price - self.coupon.cash - (1-self.coupon.percentage)
+                    final_price = self.total_price - self.coupon.cash - (1 - self.coupon.percentage)
 
                 else:
                     if self.coupon.flat_amount * self.coupon.percentage >= self.total_price:
@@ -47,12 +54,12 @@ class Order(models.Model):
 
 
 class OrderBook(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    Order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='books')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orderbook')
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f"سفارش {self.id} - {self.book.title}"
+        return f"{self.quantity} تا از {self.book}"
 
     def each_price(self):
         price = self.book.get_final_price * self.quantity
