@@ -1,38 +1,66 @@
 {%load static from static%}
 
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="">
     <title>{%block title%}Setzoka Book Store{%endblock title%}</title>
-    <link rel = "icon" href ="{%static 'title_icon.png'%}" type = "image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-          crossorigin="anonymous">
-     <link rel="stylesheet" href="{%static 'style.css'%}">
-
+    <link rel="icon" href="{%static 'title_icon.png'%}" type="image/x-icon">
+    <link href="{%static 'css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{%static 'css/style.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,600,700" rel="stylesheet">
 </head>
 <body>
-    <header>
-        {% include "navbar.html" %}
-    </header>
-     {% if messages %}
+<!-- HEADER =============================-->
+<header class="item header margin-top-0">
+    <div class="wrapper">
+        <nav role="navigation" class="navbar navbar-white navbar-embossed navbar-lg navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle"
+                            type="button">
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a href="index.html" class="navbar-brand brand"> SETZOKA </a>
+                </div>
+                <div id="navbar-collapse-02" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="propClone"><a href="index.html">Home</a></li>
+                        <li class="propClone"><a href="shop.html">Shop</a></li>
+                        <li class="propClone"><a href="product.html">Product</a></li>
+                        <li class="propClone"><a href="checkout.html">Checkout</a></li>
+                        <li class="propClone"><a href="contact.html">Contact</a></li>
+                        <li class="propClone"><a href="{% url 'login' %}">login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+		<!--HEADER =============================-->
+        {% block pageheader %}
+        <!--replace pageheader-->
+        {%endblock pageheader %}
+    </div>
+</header>
+
+<!-- MESSAGES =============================-->
+{% if messages %}
             {% for message in messages %}
             <div class="alert alert-{{message.tags}} fade_show" role="alert">
                 {{message}}
-<!--                <button type="button" class="close" data-dismiss="alert">-->
-<!--                    <span aria-hidden="true">&times;</span>-->
-<!--                </button>-->
             </div>
             {% endfor %}
         {% endif %}
+<!-- content =============================-->
+{% block content %}
+{% endblock content %}
 
-        {%block body%}
-        <!--replace me-->
-        {%endblock body%}
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-        crossorigin="anonymous"></script>
+<!-- Load JS here for greater good =============================-->
+<script src="{% 'static js/jquery-.js' %"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'js/anim.js' %}"></script>
 </body>
-</html>

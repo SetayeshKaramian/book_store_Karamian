@@ -7,12 +7,12 @@ class HomePageView(ListView):
     model = Book
     context_object_name = 'books'
     fields = ['title', 'author', 'publisher', 'category', 'price', 'image']
-    template_name = 'home.html'
+    template_name = 'index.html'
 
 
 class BookDetailView(DetailView):
     model = Book
-    template_name = 'BookDetail.html'
+    template_name = 'product.html'
 
 
 class SearchResultListView(ListView):

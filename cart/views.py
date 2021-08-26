@@ -16,7 +16,7 @@ class CartView(LoginRequiredMixin, ListView):
         return Order.objects.get(user=self.request.user, ordered=False)
 
     context_object_name = "order_list"
-    template_name = "cart"
+    template_name = "cart.html"
 
 
 class OrderSummaryView(DetailView):
@@ -25,7 +25,7 @@ class OrderSummaryView(DetailView):
 
 
 def check_storage(book, quantity):
-    if book.storage < quantity:
+    if int(book.storage) < int(quantity):
         validation = False
     else:
         validation = True
@@ -41,23 +41,24 @@ def add_to_cart(request, pk):
         if OrderBook.objects.filter(book=book, order=order).exists():
             order_book = OrderBook.objects.get(book=book, order=order)
             order_book.quantity += 1
-            if check_storage(book, order_book) is True:
-                order_book.save()
-            else:
-                messages.erro(request, "not enough book in storage!")
+            order_book.save()
+            # if check_storage(book, order_book) is True:
+            #     order_book.save()
+            # else:
+            #     messages.error(request, "not enough book in storage!")
 
+            # if check_storage(book, 1) is True:
         else:
-            if check_storage(book, 1) is True:
-                OrderBook.objects.create(book=book, order=order)
+             OrderBook.objects.create(book=book, order=order)
 
-            else:
-                messages.erro(request, "not enough book in storage!")
+            # else:
+            #     messages.erro(request, "not enough book in storage!")
     else:
-        if check_storage(book, 1) is True:
-            order = Order.objects.create(user=request.user)
-            OrderBook.objects.create(book=book, order=order)
-        else:
-            messages.erro(request, "not enough book in storage!")
+        # if check_storage(book, 1) is True:
+        order = Order.objects.create(user=request.user)
+        OrderBook.objects.create(book=book, order=order)
+        # else:
+        #     messages.erro(request, "not enough book in storage!")
 
     messages.success(request, "Cart updated!")
     return redirect("home")

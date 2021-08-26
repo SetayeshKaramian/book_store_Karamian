@@ -4,9 +4,6 @@ from django.conf import settings
 from django.db import models
 from discounts.models import Coupon
 from django.shortcuts import reverse
-from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 
 
 class Order(models.Model):
@@ -15,6 +12,10 @@ class Order(models.Model):
     ordered_date = models.DateTimeField(auto_now_add=True)
     paid = models.BooleanField(default=False)
     billing_address = models.CharField(max_length=13, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "سفارش"
+        verbose_name_plural = "سفارش‌ها"
 
     def __str__(self):
         return f"{self.user} سفارشات"
@@ -57,6 +58,10 @@ class OrderBook(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='books')
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orderbook')
     quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = "سفارش کتاب"
+        verbose_name_plural = "سفارش‌های کتاب"
 
     def __str__(self):
         return f"{self.quantity} تا از {self.book}"

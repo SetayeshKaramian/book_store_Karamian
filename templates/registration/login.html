@@ -1,0 +1,140 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<title>login to Setzoka book store</title>
+<link rel="icon" href="{%static 'title_icon.png'%}" type="image/x-icon">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static 'registration/login/vendor/bootstrap/css/bootstrap.min.css'%}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+      href="{% static 'registration/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+      href="{% static 'registration/login/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static 'registration/login/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+      href="{% static 'registration/login/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+      href="{% static 'registration/login/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static 'registration/login/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+      href="{% static 'registration/login/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static 'registration/login/css/util.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'registration/login/css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'registration/login/css/rtl.css' %}">
+<!--===============================================================================================-->
+</head>
+<body>
+
+<div class="limiter">
+
+<!--	error username and password didn't match-->
+    {% if form.errors %}
+    <div class="myfont error">ایمیل یا گذرواژه صحیح نمی‌باشد. لطفا دوباره امتحان کنید .
+	</div>
+    {% endif %}
+
+<!--	authentication errors-->
+	{% if next %}
+    {% if user.is_authenticated %}
+      <div class="myfont error">
+		  اکانت شما دسترسی به این قسمت را ندارد. برای دسترسی به این قسمت با اکانتی که دسترسی دارد وارد شوید.
+	  </div>
+    {% else %}
+      <div class="myfont error">برای دسترسی به این صفحه باید وارد شوید.</div>
+    {% endif %}
+  {% endif %}
+
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form class="login100-form validate-form" method="post">{%csrf_token%}
+                <span class="login100-form-title p-b-26 myfont">
+						خوش آمدید
+					</span>
+                <span class="login100-form-title p-b-48">
+						<image class="zmdi zmdi-font" src="{%static 'title_icon.png'%}"/>
+					</span>
+
+                <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+                    {{form.username|add_class:"input100"}}
+                    <span class="focus-input100" data-placeholder="ایمیل"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+                    {{form.password|add_class:"input100"}}
+
+                    <span class="focus-input100" data-placeholder="گذرواژه"></span>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button class="login100-form-btn myfont">
+                            ورود
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center p-t-80">
+						<span class="txt1 myfont">
+							حساب کاربری ندارید؟
+						</span>
+
+                    <a class="txt2 myfont" href="#">
+                        ثبت‌‌نام کنید
+                    </a>
+					<div class="text-center">
+						<span class="txt1 myfont">
+							رمز عبور خود را فراموش کردید؟
+						</span>
+
+                        <a class="txt2 myfont" href="{% url 'password_reset' %}">
+                            بازیابی رمز عبور
+                        </a>
+                    <div class="text-center">
+						<span class="txt1 myfont">
+							بازگشت
+						</span>
+
+                        <a class="txt2 myfont" href="{% url 'home'%}">
+                            به صفحه اصلی
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="{% static 'registration/login/vendor/jquery/jquery-3.2.1.min.js'%}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'registration/login/vendor/animsition/js/animsition.min.js'%}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'registration/login/vendor/bootstrap/js/popper.js'%}"></script>
+<script src="{% static 'registration/login/vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'registration/login/vendor/select2/select2.min.js'%}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'registration/login/vendor/daterangepicker/moment.min.js'%}"></script>
+<script src="{% static 'registration/login/vendor/daterangepicker/daterangepicker.js'%}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'registration/login/vendor/countdowntime/countdowntime.js'%}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'registration/login/js/main.js'%}"></script>
+
+
+</body>
+</html>
