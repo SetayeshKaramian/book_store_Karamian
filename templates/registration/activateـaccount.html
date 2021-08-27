@@ -1,0 +1,4 @@
+{% autoescape off %}
+سلام دوست عزیز
+لطفا برای تایید ایمیل خود بر روی این لینک کلیک کنید. دمتم گرم.,http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}
