@@ -3,13 +3,12 @@ from django.db import models
 
 # Coupon will be add in the end of cart (ForeignKey to Order model)
 class Coupon(models.Model):
-    code = models.CharField(max_length=10, unique=True)
-    percentage = models.FloatField(default=0, blank=True)
+    code = models.CharField(max_length=10, unique=True, verbose_name="کد")
+    percentage = models.FloatField(default=0, blank=True, verbose_name="درصد")
     # flat_amount: max possible amount for discount
-    flat_amount = models.IntegerField(default=None, blank=True, null=True)
-    cash = models.IntegerField(default=0)
-    expiration_date = models.DateTimeField()
-    extension_date = models.DateTimeField()
+    max_amount = models.IntegerField(default=None, blank=True, null=True, verbose_name="حداکثر تحفیف")
+    flat_fee = models.IntegerField(default=0, verbose_name="تخفیف ثابت")
+    expiration_date = models.DateTimeField(verbose_name="انقضا")
 
     class Meta:
         verbose_name = "کپن"
@@ -21,14 +20,14 @@ class Coupon(models.Model):
 
 # Discount for each book (ForeignKey to Book model)
 class Discount(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, verbose_name="عنوان")
     # flat_amount: max possible amount for discount
-    percentage = models.FloatField(default=0)
-    flat_amount = models.PositiveIntegerField(blank=True, null=True)
+    percentage = models.FloatField(default=0, verbose_name="درصد")
+    flat_amount = models.PositiveIntegerField(blank=True, null=True, verbose_name="مبلغ ثابت")
 
     class Meta:
         verbose_name = "تخفیف"
-        verbose_name_plural = "تخفیف‌هاها"
+        verbose_name_plural = "تخفیف‌ها"
 
     def __str__(self):
         return self.title

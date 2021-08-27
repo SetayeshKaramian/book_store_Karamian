@@ -7,15 +7,15 @@ from django.shortcuts import reverse
 
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    coupon = models.ForeignKey(Coupon, related_name="coupon", on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name = "کاربر")
+    coupon = models.ForeignKey(Coupon, related_name="coupon", on_delete=models.SET_NULL, blank=True, null=True, verbose_name = "کپن")
     ordered_date = models.DateTimeField(auto_now_add=True)
-    paid = models.BooleanField(default=False)
-    billing_address = models.CharField(max_length=13, blank=True, null=True)
+    paid = models.BooleanField(default=False, verbose_name = "پرداخت شده")
+    billing_address = models.CharField(max_length=13, blank=True, null=True, verbose_name = "شماره حساب")
 
     class Meta:
         verbose_name = "سفارش"
-        verbose_name_plural = "سفارش‌ها"
+        verbose_name_plural = "سفارشات"
 
     def __str__(self):
         return f"{self.user} سفارشات"
@@ -55,13 +55,13 @@ class Order(models.Model):
 
 
 class OrderBook(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='books')
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orderbook')
-    quantity = models.PositiveIntegerField(default=1)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='books', verbose_name = "کتاب")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orderbook', verbose_name = "سفارش")
+    quantity = models.PositiveIntegerField(default=1, verbose_name = "تعداد")
 
     class Meta:
-        verbose_name = "سفارش کتاب"
-        verbose_name_plural = "سفارش‌های کتاب"
+        verbose_name = "اقلام سفارش"
+        verbose_name_plural = "اقلام سفارش"
 
     def __str__(self):
         return f"{self.quantity} تا از {self.book}"

@@ -6,7 +6,7 @@ from discounts.models import Discount
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200, unique=True, verbose_name="عنوان")
 
     class Meta:
         verbose_name = "دسته‌بندی"
@@ -17,17 +17,17 @@ class Category(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)
-    publisher = models.CharField(max_length=100)
-    category = models.ManyToManyField(Category, related_name='book')
-    description = models.TextField()
-    time_add = models.DateTimeField(auto_now_add=True)
-    price = models.PositiveIntegerField(default=0)
-    discount = models.ForeignKey(Discount, related_name="discount", on_delete=models.SET_NULL, blank=True, null=True)
-    image = models.ImageField(upload_to='covers/', blank=True, null=True)
-    storage = models.PositiveIntegerField(default=1)
-    slug = models.SlugField(unique=True)
+    title = models.CharField(max_length=200, verbose_name="عنوان")
+    author = models.CharField(max_length=200, verbose_name="نویسنده")
+    publisher = models.CharField(max_length=100, verbose_name="ناشر")
+    category = models.ManyToManyField(Category, related_name='book', verbose_name="دسته‌بندی")
+    description = models.TextField(verbose_name="توضیحات")
+    time_add = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ثبت")
+    price = models.PositiveIntegerField(default=0, verbose_name="قیمت")
+    discount = models.ForeignKey(Discount, related_name="discount", on_delete=models.SET_NULL, blank=True, null=True, verbose_name="تخفیف")
+    image = models.ImageField(upload_to='covers/', default="covers/blank.jpg", blank=False, null=True, verbose_name="عکس")
+    storage = models.PositiveIntegerField(default=1, verbose_name="موجودی")
+    slug = models.SlugField(unique=True, verbose_name="عنوان رسمی برای لینک")
 
     class Meta:
         verbose_name = "کتاب"
