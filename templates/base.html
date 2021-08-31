@@ -34,13 +34,28 @@
                         <li class="propClone"><a href="product.html">Product</a></li>
                         <li class="propClone"><a href="checkout.html">Checkout</a></li>
                         <li class="propClone"><a href="contact.html">Contact</a></li>
-                        <li class="propClone"><a href="{% url 'login' %}">login</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="propClone dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {{user.email|title}}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
 
-		<!--HEADER =============================-->
+        <!--HEADER =============================-->
         {% block pageheader %}
         <!--replace pageheader-->
         {%endblock pageheader %}
@@ -49,12 +64,12 @@
 
 <!-- MESSAGES =============================-->
 {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{message.tags}} fade_show" role="alert">
-                {{message}}
-            </div>
-            {% endfor %}
-        {% endif %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} fade_show" role="alert">
+    {{message}}
+</div>
+{% endfor %}
+{% endif %}
 <!-- content =============================-->
 {% block content %}
 {% endblock content %}

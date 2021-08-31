@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    ######### registration apps ###########
+    'django.contrib.sites',
+    'registration',
+    #######################################
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,16 +45,7 @@ INSTALLED_APPS = [
     # third_party apps
     'django_extensions',
     'widget_tweaks',
-    # 'rest_framework',
-    # 'rest_framework.authtoken',
-    # 'corsheaders',
-    # 'djoser',
-
-    # # allauth
-    # 'django.contrib.sites',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
+    'crispy_forms',
 
     # own
     'cart',
@@ -139,10 +134,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
+LANGUAGES = [
+    ('fa', 'Persian'),
+]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa'
 
-TIME_ZONE = 'Asia/Kabul'
+TIME_ZONE = 'Asia/tehran'
 
 USE_I18N = True
 
@@ -174,15 +172,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = "smtp@gmail.com"
+EMAIL_PORT = "587"
+EMAIL_USE_TLS = True
+
+################# collage email id #################
+EMAIL_HOST_USER = "setzokabookstore@gmail.com"
+EMAIL_HOST_PASSWORD = "akbar agha"
 
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_REQUIRED = True
 
-
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.ModelBackend',
-#     'allauth.account.auth_backends.AuthenticationBackend',
-# ]
+# django registration redux
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
 
 # custom user
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap'

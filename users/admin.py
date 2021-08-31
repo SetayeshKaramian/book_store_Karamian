@@ -1,32 +1,44 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser, Customer, Admin, Staff, Address
+from .forms import SignupForm, CustomUserChangeForm
+from .models import CustomUser, Address, Profile
+from django.utils.translation import gettext, gettext_lazy as _
 
 
 class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
+    add_form = SignupForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ('email', 'is_staff', 'is_active',)
-    list_filter = ('is_staff', 'is_active',)
+    list_display = ('email', 'is_staff', 'is_active', 'is_superuser')
+    list_filter = ('is_staff', 'is_active', 'is_superuser',)
     search_fields = ('email',)
     ordering = ('email',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('دسترسی‌ها', {'fields': ('is_staff', 'is_active')}),
+        (("اطلاعات اکانت"), {'fields': ('email', 'password')}),
+        (_('Permissions'), {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        }),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')}
-        ),
+            'fields': ('email', 'password1', 'password2'),
+        }),
     )
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Customer)
-admin.site.register(Admin)
-admin.site.register(Staff)
+class ProfileAdmin(admin.ModelAdmin):
+    model = Profile
+    list_display = ('admin_image_display', 'name', 'phone' )
+    list_filter = ('name',)
+    search_fields = ('name', 'phone')
+
+
+
 admin.site.register(Address)
+admin.site.register(Profile, ProfileAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
+# admin.site.register(Customer)
+# admin.site.register(Staff)
+# admin.site.register(Admin)

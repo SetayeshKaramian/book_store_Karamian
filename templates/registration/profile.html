@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{%load static from static%}
+{% load crispy_forms_tags %}
+
+
+<!-- HEADER =============================-->
+{% block pageheader %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.0s">
+                    پروفایل کاربری {{user.profile.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock pageheader %}
+
+<!-- Content =============================-->
+{% block content %}
+<section class="item content">
+    <div class="container toparea">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">{{user.profile.name}}</h1>
+            </div>
+            <div class="wow-hr type_short">
+			<span class="wow-hr-h">
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="productbox">
+                <div class="image-container">
+                    <img src="{{user.profile.profile_pic.url}}" alt="">
+                </div>
+                <div class="clearfix">
+                </div>
+                <br/>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="properties-box">
+                <ul class="unstyle" dir="rtl">
+                    <li><b class="propertyname">نام: </b>{{user.profile.name}}</li>
+                    <li><b class="propertyname">شماره تماس:</b>{{user.profile.number}}</li>
+                    <li><b class="propertyname">ایمیل: </b>{{user.email}}</li>
+                </ul>
+                <div class="text-right">
+                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                            data-target="#profileModal">تغییر پروفایل
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<!--Edit user modal-->
+	<div class="modal fade" tabindex="-1" id="profileModal" role="dialog">
+	  	<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+			        <h5 class="modal-title">Edit Profile</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+		        </div>
+		        <div class="modal-body">
+			        <form method="post">
+			          	{% csrf_token %}
+			          	{{ user_form|crispy }}
+		        </div>
+		      	<div class="modal-footer">
+		        		<button type="submit" class="btn btn-primary">Save changes</button>
+		        	</form>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        </div>
+		    </div>
+	  	</div>
+	</div>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>نام کتاب</th>
+					<th>قیمت</th>
+					<th>تعداد</th>
+					<th>وضعیت پرداخت</th>
+				</tr>
+
+				{% for order in orders %}
+
+				<tr>
+					<td>{{order.orderbook.book.title}}</td>
+					<td>{{order.total_price}}</td>
+					<td>{{order.orderbook.storage}}</td>
+					<td>{{order.paid}}</td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+
+
+{% endblock content %}
