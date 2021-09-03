@@ -1,0 +1,81 @@
+{% extends 'base.html'%}
+{% load static from static %}
+
+
+<!--HEADER =======================================-->
+{% block pageheader %}
+<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="text-pageheader">
+					<div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.0s">
+						 خلاصه سفارشات
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock pageheader %}
+
+<!--TABLE=======================================-->
+{% block content %}
+<section class="item content">
+<div class="container">
+	<div class="underlined-title">
+		<div class="editContent">
+			<h1 class="text-center latestitems">پرداخت</h1>
+		</div>
+		<div class="wow-hr type_short">
+			<span class="wow-hr-h">
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			</span>
+		</div>
+	</div>
+   <table table id="edd_checkout_cart" class="ajaxed">
+  <thead>
+    <tr class="edd_cart_header_row">
+      <th scope="col" class="edd_cart_item_name">#</th>
+      <th scope="col"  class="edd_cart_item_name">نام کتاب</th>
+      <th scope="col"  class="edd_cart_item_name">قیمت</th>
+      <th scope="col"  class="edd_cart_item_name">تعداد</th>
+      <th scope="col"  class="edd_cart_item_price">قیمت کل</th>
+      <th scope="col"  class="edd_cart_item_action"></th>
+    </tr>
+  </thead>
+       {% for order_book in object.book.all %}
+  <tbody>
+    <tr>
+      <th scope="row" class="text-right">{{forloop.counter}}</th>
+        <td><a href="{% url 'book_detail' order_book.book.pk %}">{{order_book.book.title}}</a></td>
+        {% if order_book.book.discount is None %}
+      <td>{{order_book.book.price}}</td>
+        {% else %}
+        <td><strike style="color: #D3D3D3">{{order_book.book.price}}</strike>{{order_book.book.get_final_price}}</td>
+        {% endif %}
+        <td><a href="{% url 'add_to_cart' order_book.book.id %}" type="button"><b>+</b></a>
+            {{order_book.quantity}}
+            <a href="{% url 'remove_from_cart' order_book.book.id %}" type="button"><b>-</b></a></td>
+      <td>{{order_book.each_price}}</td>
+      <td>
+          <a href="{% url 'delete_orderbook' order_book.book.id %}">
+          <image src="{%static 'images/trash_icon.png'%}" alt="پاک کردن"></image></a>
+      </td>
+  </tbody>
+       {% endfor %}
+
+       <tr>
+           <td colspan="4"><b>قیمت نهایی:</b></td>
+           <td><b>{{object.total_price}}</b></td>
+       </tr>
+       <tr>
+           <td colspan="6">
+               <a type="button" class="btn btn-success btn-lg" href="{% url 'checkout'%}" style="float: left">نهایی کردن خرید</a>
+           </td>
+           </tr>
+</table>
+
+
+{% endblock content%}

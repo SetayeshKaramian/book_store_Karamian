@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock title %}
+
+{% block pageheader %}
+<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="text-pageheader">
+					<div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.0s">
+						 جست‌و‌جو
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock pageheader %}
+
+{% block content %}
+<section class="item content">
+<div class="container toparea">
+	<div class="underlined-title">
+		<div class="editContent">
+			<h1 class="text-center latestitems">نتایج جست‌و‌جو</h1>
+		</div>
+		<div class="wow-hr type_short">
+			<span class="wow-hr-h">
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			</span>
+		</div>
+	</div>
+    <div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+{% for book in book_list %}
+<div>
+<h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
+<p>نویسنده: {{ book.author }}</p>
+<p>قیمت: ریال{{ book.price }}</p>
+</div>
+</div>
+    </div>
+</div>
+</section>
+{% endfor %}
+{% endblock content %}

@@ -1,0 +1,155 @@
+{% extends 'base.html'%}
+{% load static from static %}
+{% load widget_tweaks %}
+
+{% block pageheader %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.0s">
+                    پرداخت
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</header>
+{% endblock pageheader %}
+
+<!-- CONTENT =============================-->
+{% block content %}
+<section class="item content">
+    <div class="container">
+        <div class="underlined-title">
+            <div class="editContent">
+                <div id="edd_checkout_wrap" class="col-md-8 col-md-offset-2">
+                    <form id="edd_checkout_cart_form" method="post">
+                        <div id="edd_checkout_cart_wrap">
+                            <table id="edd_checkout_cart" class="ajaxed">
+                                <thead>
+                                <tr class="edd_cart_header_row">
+                                    <th class="edd_cart_item_name">
+                                        نام کتاب
+                                    </th>
+                                    <th class="edd_cart_item_name">
+                                        تعداد
+                                    </th>
+                                    <th class="edd_cart_item_price">
+                                        قیمت تجمعی
+                                    </th>
+                                    <th class="edd_cart_actions">
+                                    </th>
+                                </tr>
+                                </thead>
+                                {% for order_book in order.book.all %}
+                                <tbody>
+                                <tr class="edd_cart_item" id="edd_cart_item_0_25" data-download-id="25">
+                                    <td class="edd_cart_item_name">
+                                        <span class="edd_checkout_cart_item_title">{{order_book.book.title}}</span>
+                                    </td>
+                                    <td class="edd_cart_item_price">
+                                        {{order_book.quantity}}
+                                    </td>
+                                    <td class="edd_cart_item_price">
+                                        {{order_book.each_price}}
+                                    </td>
+                                    <td class="edd_cart_actions">
+
+                                        <a href="{% url 'delete_orderbook' order_book.book.id %}">
+                                            <image src="{%static 'images/trash_icon.png'%}" alt="پاک کردن"></image>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% endfor %}
+                                <tfoot>
+                                <tr class="edd_cart_footer_row edd_cart_discount_row" style="display:none;">
+                                    <th colspan="5" class="edd_cart_discount">
+                                    </th>
+                                </tr>
+                                <tr class="edd_cart_footer_row">
+                                    <th colspan="5" class="edd_cart_total">
+                                        مبلغ قابل پرداخت:
+                                        <span class="edd_cart_amount" data-subtotal="11.99" data-total="11.99">
+                                            {{order.total_price}}
+                                        </span>
+                                    </th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </form>
+                      <form class="card p-2" action="{% url 'add_coupon' %}" method="POST">
+        {% csrf_token %}
+        <div class="input-group">
+            {{ couponform.code }}
+            <div class="input-group-append">
+            <button class="btn btn-secondary btn-md waves-effect m-0" type="submit">Redeem</button>
+            </div>
+        </div>
+    </form>
+                        <div id="edd_checkout_form_wrap" class="edd_clearfix">
+                            <form id="edd_purchase_form" class="edd_form" action="#" method="POST">
+                                {% csrf_token %}
+                                <fieldset id="edd_checkout_user_info">
+                                    <legend>نهایی کردن پرداخت</legend>
+                                    <p id="edd-billing_address">
+                                        <label class="edd-label">
+                                            شناسه‌ی پرداخت <span class="edd-required-indicator">*</span>
+                                        </label>
+                                    <div>{{form.billing_address}}</div>
+                                    </p>
+                                    <p id="edd-paid">
+                                        <label class="edd-label">
+                                            وضعیت پرداخت<span class="edd-required-indicator">*</span>
+                                        </label>
+                                    <div>{{form.paid}}</div>
+                                    </p>
+                                    <p id="edd_final_total_wrap">
+                                        <strong>مبلغ قابل پرداخت:</strong>
+                                        <span class="edd_cart_amount">
+                                        {{order.price_with_coupon_discount}}
+                                    </span>
+                                    </p>
+                                    <input type="hidden" name="edd_action" value="purchase">
+                                    <input type="hidden" name="edd-gateway" value="manual">
+                                    <input type="submit" class="edd-submit button" id="edd-purchase-button"
+                                           name="edd-purchase" value="تایید پرداخت">
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+</section>
+{% endblock content %}
+<!-- FOOTER =============================-->
+<div class="footer text-center">
+    <div class="container">
+        <div class="row">
+            <p class="footernote">
+                Connect with Scorilo
+            </p>
+            <ul class="social-iconsfooter">
+                <li><a href="#"><i class="fa fa-phone"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+            </ul>
+            <p>
+                &copy; 2017 Your Website Name<br/>
+                Scorilo - Free template by <a href="https://www.wowthemes.net/">WowThemesNet</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPTS =============================-->
+<script src="js/jquery-.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/anim.js"></script>
+
+</body>
+</html>

@@ -8,7 +8,7 @@ body {
 	font-size:16px;
 	color:#777;
 	line-height:1.7;
-	text-align: right;
+	text-align: right !important;
 }
 h1,h2,h3,h4,h5,h6 {
 	font-family:Roboto;
@@ -488,7 +488,7 @@ table#edd_purchase_receipt td,table#edd_purchase_receipt th,table#edd_purchase_r
 	padding:1.387em;
 }
 #edd_checkout_cart td,#edd_checkout_cart th {
-	text-align:left;
+	text-align:right;
 	border:1px solid #eee;
 	color:#666;
 	padding:.5em 1.387em;

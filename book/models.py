@@ -16,6 +16,11 @@ class Category(models.Model):
         return self.title
 
 
+class BookManager(models.Manager):
+    def best_sellers(self):
+        return self.get_queryset().order_by('sold')[0:10]
+
+
 class Book(models.Model):
     title = models.CharField(max_length=200, verbose_name="عنوان")
     author = models.CharField(max_length=200, verbose_name="نویسنده")
@@ -29,7 +34,10 @@ class Book(models.Model):
     image = models.ImageField(upload_to='covers/', default="covers/blank.jpg", blank=False, null=True,
                               verbose_name="عکس")
     storage = models.PositiveIntegerField(default=1, verbose_name="موجودی")
+    sold = models.PositiveIntegerField(default=0, verbose_name="فروخته شده")
     slug = models.SlugField(unique=True, verbose_name="عنوان رسمی برای لینک")
+
+    objects = BookManager()
 
     class Meta:
         verbose_name = "کتاب"
@@ -41,12 +49,13 @@ class Book(models.Model):
     # For admin site to be able to display book images.
     def admin_image_display(self):
         return mark_safe(f'<img src="{self.image.url}" width="{90}" height={125} />')
-
     admin_image_display.short_description = 'Image'
 
+    # pk for book_detail
     def get_absolute_url(self):
         return reverse('book_detail', args=[str(self.id)])
 
+    # price after discount that directly effect book
     def get_final_price(self):
         if self.discount is None:
             final_price = self.price

@@ -1,17 +1,19 @@
 {%load static from static%}
 
-<html>
+<html dir="rtl" lang="fa">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="">
-    <title>{%block title%}Setzoka Book Store{%endblock title%}</title>
+    <title>{%block title%}کتاب‌فروشی ستز{%endblock title%}</title>
+    <link href="{%static 'css/style.css' %}" rel="stylesheet">
     <link rel="icon" href="{%static 'title_icon.png'%}" type="image/x-icon">
     <link href="{%static 'css/bootstrap.min.css'%}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-    <link href="{%static 'css/style.css' %}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,600,700" rel="stylesheet">
+    <style href="{%static 'css/rtl.css'%}" rel="stylesheet"></style>
+
 </head>
 <body>
 <!-- HEADER =============================-->
@@ -23,33 +25,26 @@
                     <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle"
                             type="button">
                         <i class="fa fa-bars"></i>
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only ">Toggle navigation</span>
                     </button>
-                    <a href="index.html" class="navbar-brand brand"> SETZOKA </a>
+                    <a href="index.html" class="navbar-brand brand myfont"> کتاب‌فروشی</a>
+                    <form class="navbar-brand brand" action="{% url 'search_results' %}">
+                       <input name="q" class="form-control mr-sm-2" type="text" placeholder="Search"
+                       aria-label="Search">
+                    </form>
                 </div>
                 <div id="navbar-collapse-02" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="propClone"><a href="index.html">Home</a></li>
-                        <li class="propClone"><a href="shop.html">Shop</a></li>
-                        <li class="propClone"><a href="product.html">Product</a></li>
-                        <li class="propClone"><a href="checkout.html">Checkout</a></li>
-                        <li class="propClone"><a href="contact.html">Contact</a></li>
-                        {% if user.is_authenticated %}
-                        <li class="propClone dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                {{user.email|title}}
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
+                         <li class="propClone"><a href="{% url 'logout'%}">خارج شدن</a></li>
+                        <li class="propClone"><a href="{% url 'order_summary'%}">سبد خرید</a></li>
+                        <li class="propClone"><a href="{% url 'home'%}">خانه</a></li>
+                        <li class="propClone">
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}"><img src="{%static 'images/user_icon.png'%}"></a>
+                            {% else %}
+                            <a href="{% url 'login' %}"><img src="{%static 'images/user_icon.png'%}"></a>
+                            {% endif %}
                         </li>
-                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -78,4 +73,5 @@
 <script src="{% 'static js/jquery-.js' %"></script>
 <script src="{% static 'js/bootstrap.min.js'%}"></script>
 <script src="{% static 'js/anim.js' %}"></script>
+
 </body>

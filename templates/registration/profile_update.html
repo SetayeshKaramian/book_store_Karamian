@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{%load static from static%}
+
+
+<!-- HEADER =============================-->
+{% block pageheader %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.0s">
+                    پروفایل کاربری {{user.profile.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock pageheader %}
+
+<!-- Content =============================-->
+{% block content %}
+<section class="item content">
+    <div class="container toparea">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">{{user.profile.name}}</h1>
+            </div>
+            <div class="wow-hr type_short">
+			<span class="wow-hr-h">
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			</span>
+            </div>
+        </div>
+    </div>

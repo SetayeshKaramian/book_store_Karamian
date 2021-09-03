@@ -30,14 +30,13 @@ class CustomUserAdmin(UserAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     model = Profile
-    list_display = ('admin_image_display', 'name', 'phone' )
+    list_display = ('admin_image_display', 'name', 'phone')
     list_filter = ('name',)
     search_fields = ('name', 'phone')
 
 
-
 admin.site.register(Address)
-admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Profile)
 admin.site.register(CustomUser, CustomUserAdmin)
 # admin.site.register(Customer)
 # admin.site.register(Staff)

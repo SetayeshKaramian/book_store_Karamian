@@ -4,7 +4,7 @@ from .models import Book, Category
 
 
 class HomePageView(ListView):
-    model = Book
+    queryset = Book.objects.order_by('sold')[0:10]
     context_object_name = 'books'
     fields = ['title', 'author', 'publisher', 'category', 'price', 'image']
     template_name = 'index.html'

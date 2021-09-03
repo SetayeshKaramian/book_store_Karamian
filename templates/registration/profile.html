@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {%load static from static%}
-{% load crispy_forms_tags %}
 
 
 <!-- HEADER =============================-->
@@ -54,16 +53,30 @@
                     <li><b class="propertyname">شماره تماس:</b>{{user.profile.number}}</li>
                     <li><b class="propertyname">ایمیل: </b>{{user.email}}</li>
                 </ul>
-                <div class="text-right">
-                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
-                            data-target="#profileModal">تغییر پروفایل
-                    </button>
+
+                <div class="form-group">
+    <table>
+    <form method="POST">
+        {% csrf_token %}
+        {{user_form.as_p}}
+        {{profile_form.as_p}}
+        <button class="btn btn-secondary" type="submit">
+            پروفایل
+        </button>
+        </div>
+</table>
+        </button>
+    </form>
+</div>
+
                 </div>
             </div>
         </div>
     </div>
     </div>
 </section>
+
+
 
 <!--Edit user modal-->
 	<div class="modal fade" tabindex="-1" id="profileModal" role="dialog">
@@ -78,7 +91,7 @@
 		        <div class="modal-body">
 			        <form method="post">
 			          	{% csrf_token %}
-			          	{{ user_form|crispy }}
+			          	{{ user_form }}
 		        </div>
 		      	<div class="modal-footer">
 		        		<button type="submit" class="btn btn-primary">Save changes</button>
@@ -89,31 +102,71 @@
 	  	</div>
 	</div>
 
-<div class="row">
-	<div class="col-md">
-		<div class="card card-body">
-			<table class="table table-sm">
-				<tr>
-					<th>نام کتاب</th>
-					<th>قیمت</th>
-					<th>تعداد</th>
-					<th>وضعیت پرداخت</th>
-				</tr>
 
-				{% for order in orders %}
-
-				<tr>
-					<td>{{order.orderbook.book.title}}</td>
-					<td>{{order.total_price}}</td>
-					<td>{{order.orderbook.storage}}</td>
-					<td>{{order.paid}}</td>
-				</tr>
-				{% endfor %}
-
-			</table>
+<section class="item content">
+    <div class="container">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">تاریخچه سفارشات</h1>
+            </div>
+            <div class="wow-hr type_short">
+			<span class="wow-hr-h">
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			</span>
+            </div>
+        </div>
+        <div class="underlined-title">
+            <div class="editContent">
+                <div id="edd_checkout_wrap" class="col-md-8 col-md-offset-2">
+                    <form id="edd_checkout_cart_form" method="post">
+                        <div id="edd_checkout_cart_wrap">
+                            <table id="edd_checkout_cart" class="ajaxed">
+                                <thead>
+                                <tr class="edd_cart_header_row">
+                                    <th class="edd_cart_item_name">
+                                        سفارش
+                                    </th>
+									<th class="edd_cart_item_name">
+                                        قیمت
+                                    </th>
+                                    <th class="edd_cart_item_name">
+                                        تاریخ
+                                    </th>
+                                    <th class="edd_cart_item_price">
+                                        وضعیت پرداخت
+                                    </th>
+                                </tr>
+                                </thead>
+                                {% for order in orders %}
+                                <tbody>
+                                <tr class="edd_cart_item" id="edd_cart_item_0_25" data-download-id="25">
+                                    <td class="edd_cart_item_name">
+                                        <span class="edd_checkout_cart_item_title">{{order.id}}</span>
+                                    </td>
+                                    <td class="edd_cart_item_price">
+                                        {{order.price_with_coupon_discount}}
+                                    </td>
+                                    <td class="edd_cart_item_price">
+                                        {{order.ordered_date}}
+                                    </td>
+                                    <td class="edd_cart_actions">
+										{% if order.paid is True %}
+										پرداخت شده
+										{% else %}
+										در انتظار پرداخت
+										{% endif %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% endfor %}
+							</table>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
-
-
+</section>
 {% endblock content %}
