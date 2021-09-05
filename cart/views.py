@@ -129,7 +129,7 @@ def add_to_cart(request, pk):
         if OrderBook.objects.filter(book=book, order=order).exists():
             order_book = OrderBook.objects.get(book=book, order=order)
             order_book.quantity += 1
-            if check_storage(book, order_book.quantity) is True:
+            if check_storage(book, 1) is True:
                 # update storage, quantity and sold fields
                 order_book.book.storage -= 1
                 order_book.book.sold += 1

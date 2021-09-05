@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.views.generic.edit import UpdateView
+from django.shortcuts import render, redirect
+from django.views.generic.edit import UpdateView, View
 from .forms import UserCreationForm, UserForm, ProfileForm
 from .models import Profile
 
@@ -16,4 +16,13 @@ def userpage(request):
     return render(request=request, template_name="registration/profile.html", context=context)
 
 
+class UpdateProfile(LoginRequiredMixin, View):
+    def post(self, *args, **kwargs):
+        form = ProfileForm(self.request.POST or None)
+        if form.is_valid():
+            profile = Profile.objects.get(user=self.request.user)
+            profile.name = form.cleaned_data.get('name')
+            profile.phone = form.cleaned_data.get('phone')
+            profile.save()
 
+        return redirect(self.request.META['HTTP_REFERER'])
